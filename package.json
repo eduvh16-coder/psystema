@@ -1,6 +1,6 @@
 {
   "name": "psystema-backend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Backend en Vercel para el Dictado Inteligente de Psystema.",
   "engines": {
