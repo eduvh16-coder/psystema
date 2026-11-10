@@ -269,6 +269,46 @@
     );
   }
 
+  // change password from inside the app (asks for the current one first)
+  window.CambiarPasswordModal = function CambiarPasswordModal({ onClose }) {
+    const [actual, setActual] = React.useState(""), [p1, setP1] = React.useState(""), [p2, setP2] = React.useState("");
+    const [msg, setMsg] = React.useState(null), [busy, setBusy] = React.useState(false);
+    const ok = actual && p1.length >= 8 && p1 === p2;
+    const go = async () => {
+      setBusy(true); setMsg(null);
+      try {
+        const { data } = await sb.auth.getSession();
+        const email = data && data.session && data.session.user.email;
+        const chk = await sb.auth.signInWithPassword({ email, password: actual });
+        if (chk.error) throw new Error("La contraseña actual no es correcta.");
+        const { error } = await sb.auth.updateUser({ password: p1 });
+        if (error) throw error;
+        setMsg({ ok: true, t: "Contraseña actualizada. Úsala la próxima vez que inicies sesión." });
+        setActual(""); setP1(""); setP2("");
+      } catch (e) {
+        const m = String((e && e.message) || e);
+        setMsg({ ok: false, t: /different from the old|same password/i.test(m) ? "La nueva contraseña debe ser distinta a la actual." : /weak|at least/i.test(m) ? "Elige una contraseña más segura (mínimo 8 caracteres, mezcla letras y números)." : m });
+      }
+      setBusy(false);
+    };
+    const pw = (label, v, set, ac) => (
+      <Field label={label}><input type="password" autoComplete={ac} className={fieldCls} style={inputStyle()} value={v} onChange={(e) => set(e.target.value)} {...fx} /></Field>
+    );
+    return (
+      <ModalShell icon="shield" title="Cambiar contraseña" subtitle="Para tu cuenta de Psystema" onClose={onClose}
+        footer={<><BtnGhost onClick={onClose}>{msg && msg.ok ? "Cerrar" : "Cancelar"}</BtnGhost><BtnPrimary disabled={!ok || busy} onClick={go}>{busy ? "Guardando…" : "Cambiar contraseña"}</BtnPrimary></>}>
+        <div className="flex flex-col gap-4">
+          {pw("Contraseña actual", actual, setActual, "current-password")}
+          {pw("Nueva contraseña (mínimo 8 caracteres)", p1, setP1, "new-password")}
+          {pw("Repite la nueva contraseña", p2, setP2, "new-password")}
+          {p2 && p1 !== p2 && <div className="text-[12.5px]" style={{ color: "#B23636" }}>Las contraseñas no coinciden.</div>}
+          {msg && <div className="text-[13px] rounded-[10px] px-3.5 py-2.5" style={msg.ok ? { background: "#E4F2EB", color: "#256B4C" } : { background: "#FCEDED", color: "#B23636" }}>{msg.t}</div>}
+          <p className="text-[12px]" style={{ color: "var(--ink-soft)" }}>¿Olvidaste la actual? Cierra sesión y usa «¿Olvidaste tu contraseña?» en la pantalla de inicio.</p>
+        </div>
+      </ModalShell>
+    );
+  };
+
   // small status pill: only visible while saving or when something failed
   window.SyncBadge = function SyncBadge() {
     const [e, setE] = React.useState(estado);

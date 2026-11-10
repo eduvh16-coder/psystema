@@ -326,7 +326,7 @@ function App() {
     { icon: "shield", label: "Políticas del consultorio", onClick: () => onMenu("politicas") },
     { icon: "file", label: "Generar contrato", onClick: () => onMenu("contrato") },
     { icon: "external", label: "Respaldo: exportar / importar", onClick: () => onMenu("respaldo") },
-  ].concat(window.PSY_CLOUD ? [{ icon: "logout", label: "Cerrar sesión", danger: true, onClick: () => onMenu("salir") }] : []);
+  ].concat(window.PSY_CLOUD ? [{ icon: "shield", label: "Cambiar contraseña", onClick: () => onMenu("password") }, { icon: "logout", label: "Cerrar sesión", danger: true, onClick: () => onMenu("salir") }] : []);
 
   const modals = (
     <ModalLayer modal={modal} setModal={setModal} pacientes={pacientes} pagos={pagos}
@@ -575,6 +575,7 @@ function ModalLayer(props) {
     case "politicas": return <PoliticasModal onClose={close} onSave={props.savePoliticas} onPin={() => setModal({ type: "pin" })} />;
     case "riesgo": { const p = pacientes.find((x) => x.id === modal.pid); return p ? <RiesgoModal paciente={p} onClose={close} onSave={props.saveRiesgo} /> : null; }
     case "plan": { const p = pacientes.find((x) => x.id === modal.pid); return p ? <PlanSeguridadModal paciente={p} onClose={close} onSave={props.savePlan} /> : null; }
+    case "password": return window.CambiarPasswordModal ? <window.CambiarPasswordModal onClose={close} /> : null;
     case "limpiar": return <ConfirmModal danger title="Empezar sin datos de ejemplo" confirmLabel="Borrar todo"
       text="Se borrarán todos los pacientes, notas, citas y pagos guardados en este navegador (incluidos los de ejemplo). Tu perfil y tu plantilla se conservan. Si tienes datos reales, exporta un respaldo antes."
       onClose={close} onConfirm={props.limpiar} />;

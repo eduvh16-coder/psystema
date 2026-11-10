@@ -1,8 +1,8 @@
 // Psystema — service worker: makes the app open fast and install on the home screen.
 // It only caches the app's own files (and the fonts/libraries it loads). Patient data is never cached here:
 // requests to Supabase and to the AI server always go to the network.
-const VERSION = "psystema-202611100537";
-const SHELL = ["./", "index.html", "app.css?v=202611100537", "vendor.js?v=202611100537", "app.js?v=202611100537", "config.js?v=202611100537", "manifest.webmanifest", "icons/apple-touch-icon.png", "icons/icon-192.png"];
+const VERSION = "psystema-202611100552";
+const SHELL = ["./", "index.html", "app.css?v=202611100552", "vendor.js?v=202611100552", "app.js?v=202611100552", "config.js?v=202611100552", "manifest.webmanifest", "icons/apple-touch-icon.png", "icons/icon-192.png"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

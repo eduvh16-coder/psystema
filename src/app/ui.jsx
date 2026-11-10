@@ -129,6 +129,7 @@ function Sidebar({ view, setView, dark, citasCount, onMenu }) {
             { icon: "file", label: "Generar contrato", onClick: () => onMenu("contrato") },
             "-",
             { icon: "external", label: "Respaldo: exportar / importar", onClick: () => onMenu("respaldo") },
+            ...(window.PSY_CLOUD ? [{ icon: "shield", label: "Cambiar contraseña", onClick: () => onMenu("password") }] : []),
             window.PSY_CLOUD
               ? { icon: "logout", label: "Cerrar sesión", danger: true, onClick: () => onMenu("salir") }
               : { icon: "x", label: "Empezar sin datos de ejemplo", danger: true, onClick: () => onMenu("limpiar") },
