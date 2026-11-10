@@ -1,9 +1,6 @@
 {
-  "name": "psystema-backend",
-  "version": "1.0.1",
+  "name": "psystema",
   "private": true,
-  "description": "Backend en Vercel para el Dictado Inteligente de Psystema.",
-  "engines": {
-    "node": ">=18"
-  }
+  "scripts": { "deploy": "wrangler deploy" },
+  "devDependencies": { "wrangler": "^4" }
 }

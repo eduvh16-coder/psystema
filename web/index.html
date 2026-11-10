@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <title>Psystema</title>
+  <meta name="description" content="Expediente clínico, agenda y notas de sesión." />
+  <meta name="theme-color" content="#F5F7FA" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Psystema" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="app.css?v=__V__" />
+  <style>
+    :root {
+      --bg: #F5F7FA; --ink: #232A36; --ink-soft: #6B7380; --line: #E8EBF0;
+      --side-w: 246px; --side-dark: #171A21; --top-h: 64px; --nav-h: 42px;
+      --accent: #3D6FF6; --accent-soft: #E8EEFE; --accent-glow: rgba(61,111,246,.40);
+    }
+    * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); }
+    #root { height: 100%; }
+    ::selection { background: var(--accent-soft); }
+    ::-webkit-scrollbar { width: 9px; height: 9px; }
+    ::-webkit-scrollbar-thumb { background: #D4D9E1; border-radius: 9px; border: 2px solid transparent; background-clip: content-box; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    @keyframes mpop { from { opacity: 0; transform: translateY(8px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes eqbar { 0%,100% { transform: scaleY(.28); } 50% { transform: scaleY(1); } }
+    @keyframes shimmer { 0% { background-position: -340px 0; } 100% { background-position: 340px 0; } }
+    .ai-skel { background: linear-gradient(90deg, #EEF1F6 0%, #E2E7F0 40%, #EEF1F6 80%); background-size: 680px 100%; animation: shimmer 1.25s linear infinite; border-radius: 7px; }
+    select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23707885' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; }
+    /* ---- mobile / iPhone ---- */
+    html, body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+    .h-screen { height: 100vh; height: 100dvh; }
+    .min-h-screen { min-height: 100vh; min-height: 100dvh; }
+    .psy-sheet { max-height: 94vh; max-height: 94dvh; }
+    .psy-safe-b { padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+    button, a, select, input[type="checkbox"] { touch-action: manipulation; }
+    input[type="date"], input[type="time"], input[type="month"] { -webkit-appearance: none; appearance: none; min-height: 2.25rem; }
+    input[type="date"]::-webkit-date-and-time-value, input[type="time"]::-webkit-date-and-time-value { text-align: left; }
+    @media (max-width: 767px) { input, select, textarea { font-size: 16px !important; } }
+    #boot { position: fixed; inset: 0; display: grid; place-items: center; background: var(--bg); z-index: 100; }
+    #nojs { padding: 24px; font: 15px/1.4 -apple-system, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="boot" aria-hidden="true">__BOOTLOGO__</div>
+  <div id="root"></div>
+  <noscript><div id="nojs">Psystema necesita JavaScript activado.</div></noscript>
+
+  <script src="vendor.js?v=__V__"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.52.0"></script>
+  <script src="config.js?v=__V__"></script>
+  <script src="app.js?v=__V__"></script>
+  <script>
+    (function () { var b = document.getElementById("boot"); if (b) setTimeout(function () { b.remove(); }, 50); })();
+    if ("serviceWorker" in navigator && location.protocol === "https:") {
+      window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+    }
+  </script>
+</body>
+</html>

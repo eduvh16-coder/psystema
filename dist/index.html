@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <title>Psystema</title>
+  <meta name="description" content="Expediente clínico, agenda y notas de sesión." />
+  <meta name="theme-color" content="#F5F7FA" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Psystema" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="app.css?v=202611100537" />
+  <style>
+    :root {
+      --bg: #F5F7FA; --ink: #232A36; --ink-soft: #6B7380; --line: #E8EBF0;
+      --side-w: 246px; --side-dark: #171A21; --top-h: 64px; --nav-h: 42px;
+      --accent: #3D6FF6; --accent-soft: #E8EEFE; --accent-glow: rgba(61,111,246,.40);
+    }
+    * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); }
+    #root { height: 100%; }
+    ::selection { background: var(--accent-soft); }
+    ::-webkit-scrollbar { width: 9px; height: 9px; }
+    ::-webkit-scrollbar-thumb { background: #D4D9E1; border-radius: 9px; border: 2px solid transparent; background-clip: content-box; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    @keyframes mpop { from { opacity: 0; transform: translateY(8px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes eqbar { 0%,100% { transform: scaleY(.28); } 50% { transform: scaleY(1); } }
+    @keyframes shimmer { 0% { background-position: -340px 0; } 100% { background-position: 340px 0; } }
+    .ai-skel { background: linear-gradient(90deg, #EEF1F6 0%, #E2E7F0 40%, #EEF1F6 80%); background-size: 680px 100%; animation: shimmer 1.25s linear infinite; border-radius: 7px; }
+    select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23707885' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; }
+    /* ---- mobile / iPhone ---- */
+    html, body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+    .h-screen { height: 100vh; height: 100dvh; }
+    .min-h-screen { min-height: 100vh; min-height: 100dvh; }
+    .psy-sheet { max-height: 94vh; max-height: 94dvh; }
+    .psy-safe-b { padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+    button, a, select, input[type="checkbox"] { touch-action: manipulation; }
+    input[type="date"], input[type="time"], input[type="month"] { -webkit-appearance: none; appearance: none; min-height: 2.25rem; }
+    input[type="date"]::-webkit-date-and-time-value, input[type="time"]::-webkit-date-and-time-value { text-align: left; }
+    @media (max-width: 767px) { input, select, textarea { font-size: 16px !important; } }
+    #boot { position: fixed; inset: 0; display: grid; place-items: center; background: var(--bg); z-index: 100; }
+    #nojs { padding: 24px; font: 15px/1.4 -apple-system, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="boot" aria-hidden="true"><svg width="46" height="46" viewBox="76 72 152 156" fill="#3D6FF6" opacity=".35"><path d="M218.36,138.29c.88-4.56,1.72-16-6.85-30.95a37.71,37.71,0,0,0-20.72-16.62l-.56-1.1-.07-.14c-2.39-4.79-6-12-16.37-14.83-13.11-3.55-20.69,0-23.81,2.12-3.12-2.14-10.69-5.67-23.77-2.12-10.37,2.81-14,10-16.41,14.91-.21.41-.4.8-.59,1.16a37.71,37.71,0,0,0-20.72,16.62c-8.57,15-7.73,26.39-6.85,30.95a53.21,53.21,0,0,0-5.83,25.08c0,17.13,13.32,25.64,19.57,28.69,1.47,9.64,6.65,22.63,22.83,30.88A36.72,36.72,0,0,0,135,226.86a45.16,45.16,0,0,0,15-2.63,55.63,55.63,0,0,0,15,2.63,36.72,36.72,0,0,0,16.82-3.92c16.18-8.25,21.36-21.24,22.83-30.88,6.25-3.05,19.54-11.56,19.57-28.69A53.21,53.21,0,0,0,218.36,138.29ZM166.71,218c-5.52-.67-9.78-5-12.65-12.85a40.5,40.5,0,0,1-.37-4.31l-.14-109.09c0-3.35,1-5.82,3-7.33,2.9-2.21,7.59-2.25,11-1.33,8.67,2.4,11.27,6.09,12,7.89-3.74,2.33-7.84,5.33-7.71,7.15a1.54,1.54,0,0,0,1,1.3c1.78.76,4.1.64,6.77.5,6.46-.34,15.31-.8,22.6,11.53,5.69,9.63,7.29,16.52,4.9,21a13.11,13.11,0,0,1-3.46,3.38,24,24,0,0,0-7.21,7.94,1.46,1.46,0,0,0,.13,1.76c.39.44,1.58,1.74,13.51-3,1.65,2.69,5.12,9.91,4,21.74-1.1,11.49-7.85,16.34-11.74,18.2-1-8.66-2.44-8.77-3.07-8.83-1.42-.12-2,1.86-2.24,2.91a55.58,55.58,0,0,0-1,6.42c-1.12,9-2.82,22.59-12.64,29.21A36.56,36.56,0,0,1,173,217.37,29.61,29.61,0,0,1,166.71,218Zm-39.58-.57a36.71,36.71,0,0,1-10.43-5.17C106.88,205.6,105.18,192,104.06,183a55.58,55.58,0,0,0-1-6.42c-.27-1-.78-2.91-2.12-2.91h-.12c-.63.06-2.07.17-3.07,8.83-3.89-1.86-10.64-6.71-11.74-18.2-1.14-11.83,2.33-19.05,4-21.74,11.93,4.72,13.12,3.42,13.51,3a1.46,1.46,0,0,0,.13-1.76,24,24,0,0,0-7.21-7.94,13,13,0,0,1-3.46-3.38c-2.39-4.53-.79-11.42,4.9-21,7.29-12.33,16.14-11.87,22.6-11.53,2.67.14,5,.26,6.77-.5a1.54,1.54,0,0,0,1-1.3c.13-1.82-4-4.82-7.71-7.15.76-1.8,3.36-5.49,12-7.89,3.37-.92,8.06-.88,11,1.33,2,1.51,3,4,3,7.33l-.14,109.07a40.43,40.43,0,0,1-.37,4.33c-2.87,7.86-7.13,12.18-12.55,12.85A30.6,30.6,0,0,1,127.13,217.39Z"></path><path d="M128.5,121.86a12.84,12.84,0,0,1-2.16-2.25,18.74,18.74,0,0,1-2-9.43,7.65,7.65,0,0,0-.11-1.79c-.38-1.47-1.21-1.7-1.68-1.71h0c-2.71,0-5.34,9-5.83,10.82l-.13.44c-.07.23-.13.47-.19.71-.33,1.3-.61,2.43-2.13,3.18-6.2,3.1-6.8,7.27-6.61,9.47.08,1,.51,2.91,1.52,3.21a1,1,0,0,0,.71,0,1.85,1.85,0,0,0,.42-.38c4.64-5.87,9-7.38,9.79-7.44,1.32-.06,4.12,1.62,6.37,3,3.45,2,5.3,3.08,6.56,2.39a1.63,1.63,0,0,0,.82-1.48C134,126.85,130.83,124,128.5,121.86Z"></path><path d="M171.5,178.1a12.51,12.51,0,0,1,2.16,2.24,18.78,18.78,0,0,1,2,9.43,7.61,7.61,0,0,0,.11,1.79c.38,1.48,1.21,1.7,1.68,1.71h0c2.71,0,5.34-9,5.83-10.82l.13-.44c.07-.23.13-.46.19-.71.33-1.3.61-2.42,2.13-3.18,6.2-3.09,6.8-7.26,6.61-9.47-.08-1-.51-2.9-1.52-3.21a1,1,0,0,0-.71,0,2.08,2.08,0,0,0-.42.39c-4.64,5.87-9,7.37-9.79,7.43-1.32.06-4.12-1.62-6.37-3-3.45-2-5.3-3.08-6.56-2.39a1.63,1.63,0,0,0-.82,1.48C166,173.11,169.17,176,171.5,178.1Z"></path></svg></div>
+  <div id="root"></div>
+  <noscript><div id="nojs">Psystema necesita JavaScript activado.</div></noscript>
+
+  <script src="vendor.js?v=202611100537"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.52.0"></script>
+  <script src="config.js?v=202611100537"></script>
+  <script src="app.js?v=202611100537"></script>
+  <script>
+    (function () { var b = document.getElementById("boot"); if (b) setTimeout(function () { b.remove(); }, 50); })();
+    if ("serviceWorker" in navigator && location.protocol === "https:") {
+      window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+    }
+  </script>
+</body>
+</html>

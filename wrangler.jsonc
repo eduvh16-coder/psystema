@@ -1,0 +1,19 @@
+{
+  // Psystema — Cloudflare Worker: serves the app (./dist) and the AI endpoint (/api/ia)
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "psystema",
+  "main": "worker/app-worker.js",
+  "compatibility_date": "2025-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    "SUPABASE_URL": "https://knjaakkolunhlmkntrdm.supabase.co",
+    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuamFha2tvbHVuaGxta250cmRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQyODU5NTIsImV4cCI6MjEwOTg2MTk1Mn0.q8ZlnWPvePxFSMgr_NgkqGLEh0J6eQVOEYtwPKIfRWs",
+    "ANTHROPIC_MODEL": "claude-sonnet-5-5"
+  },
+  "observability": { "enabled": true }
+}
